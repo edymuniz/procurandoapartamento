@@ -31,7 +31,10 @@ Considerando os testes abaixo, os resultados seriam os seguintes:
     - A entrada de dados será um Array de String, e o return do Método será uma String. Ex: "Quadra 5";
     - Qual seria o resultado caso as entradas sejam:
         - ['ESCOLA', 'ACADEMIA'];
+
+	RESPOSTA: ESCOLA
         - ['ESCOLA', 'MERCADO', 'ACADEMIA'];
+	RESPOSTA: MERCADO
     
 2.	Criar testes unitários baseado nos exemplos passados;
 ![image](https://user-images.githubusercontent.com/90634328/187255894-6ff4700d-0e97-4435-af29-a615925c6d20.png)
