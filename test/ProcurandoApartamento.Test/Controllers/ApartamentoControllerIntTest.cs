@@ -45,7 +45,9 @@ namespace ProcurandoApartamento.Test.Controllers
 
         private Apartamento _apartamento;
 
+        private const string DefaultEstabelecimentos = "ACADEMIA, MERCADO";
 
+ 
         private Apartamento CreateEntity()
         {
             return new Apartamento
@@ -114,6 +116,24 @@ namespace ProcurandoApartamento.Test.Controllers
             json.SelectTokens("$.[*].apartamentoDisponivel").Should().Contain(DefaultApartamentoDisponivel);
             json.SelectTokens("$.[*].estabelecimento").Should().Contain(DefaultEstabelecimento);
             json.SelectTokens("$.[*].estabelecimentoExiste").Should().Contain(DefaultEstabelecimentoExiste);
+        }
+
+        [Fact]
+        public async Task GetMelhorApartamento()
+        {
+
+            // Initialize the database
+            await _apartamentoRepository.CreateOrUpdateAsync(_apartamento);
+            await _apartamentoRepository.SaveChangesAsync();
+
+            // Get the apartamento
+            var response = await _client.GetAsync($"/api/apartamentos/{DefaultEstabelecimentos}");
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var json = JToken.Parse(await response.Content.ReadAsStringAsync());
+            json.SelectTokens("$.apartamentoDisponivel").Should().Contain(DefaultApartamentoDisponivel);
+            json.SelectTokens("$.estabelecimento").Should().Contain(DefaultEstabelecimento);
+            json.SelectTokens("$.estabelecimentoExiste").Should().Contain(DefaultEstabelecimentoExiste);
         }
 
         [Fact]
