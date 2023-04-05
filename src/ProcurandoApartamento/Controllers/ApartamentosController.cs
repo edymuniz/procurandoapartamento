@@ -69,5 +69,13 @@ namespace ProcurandoApartamento.Controllers
             await _apartamentoService.Delete(id);
             return NoContent().WithHeaders(HeaderUtil.CreateEntityDeletionAlert(EntityName, id.ToString()));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMelhorApartamento([FromRoute] string[] request)
+        {
+            _log.LogDebug($"REST request to get Melhor Apartamento : {request}");
+            var result = await _apartamentoService.BuscaMelhorApartamento(request);
+            return ActionResultUtil.WrapOrNotFound(result);
+        }
     }
 }

@@ -13,9 +13,24 @@ namespace ProcurandoApartamento.Infrastructure.Data.Repositories
 {
     public class ApartamentoRepository : GenericRepository<Apartamento, long>, IApartamentoRepository
     {
+        private readonly IUnitOfWork _context;
+
         public ApartamentoRepository(IUnitOfWork context) : base(context)
         {
+            _context = context;
         }
 
+        public async Task<Apartamento> BuscaMelhorApartamento(string[] request)
+        {
+
+            var query2 = from apto in _context.Set<Apartamento>()
+                         where apto.EstabelecimentoExiste == true
+                         && apto.ApartamentoDisponivel == true
+                         && request.Contains(  apto.Estabelecimento)
+                         orderby apto.Quadra descending
+                         select apto;
+            return query2.OrderByDescending(x => x.Quadra).FirstOrDefault();
+
+        } 
     }
 }

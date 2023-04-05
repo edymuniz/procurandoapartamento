@@ -41,5 +41,16 @@ namespace ProcurandoApartamento.Domain.Services
             await _apartamentoRepository.DeleteByIdAsync(id);
             await _apartamentoRepository.SaveChangesAsync();
         }
+
+        public virtual async Task<string> BuscaMelhorApartamento(string[] request)
+        {
+            var result= await _apartamentoRepository.BuscaMelhorApartamento(request);
+            if (result == null)
+            {
+                return null;
+            }
+            return result.ToString();
+                
+        }
     }
 }
