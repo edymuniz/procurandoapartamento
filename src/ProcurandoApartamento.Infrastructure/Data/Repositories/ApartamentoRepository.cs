@@ -20,17 +20,11 @@ namespace ProcurandoApartamento.Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task<Apartamento> BuscaMelhorApartamento(string[] request)
+        public async Task<Apartamento> BuscaMelhorApartamento(string[] request) 
         {
-
-            var query2 = from apto in _context.Set<Apartamento>()
-                         where apto.EstabelecimentoExiste == true
-                         && apto.ApartamentoDisponivel == true
-                         && request.Contains(  apto.Estabelecimento)
-                         orderby apto.Quadra descending
-                         select apto;
-            return query2.OrderByDescending(x => x.Quadra).FirstOrDefault();
-
+            IQueryable<Apartamento> query = Obter();
+            query = query.Where(a => a.ApartamentoDisponivel == true && a.EstabelecimentoExiste == true && request.Contains(a.Estabelecimento));
+            return query.OrderByDescending(a => a.Quadra).FirstOrDefault();
         } 
     }
 }

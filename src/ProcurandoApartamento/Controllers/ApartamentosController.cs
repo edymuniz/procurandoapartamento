@@ -70,7 +70,7 @@ namespace ProcurandoApartamento.Controllers
             return NoContent().WithHeaders(HeaderUtil.CreateEntityDeletionAlert(EntityName, id.ToString()));
         }
 
-        [HttpGet]
+        [HttpGet("GetMelhorApartamento")]
         public async Task<IActionResult> GetMelhorApartamento([FromRoute] string[] request)
         {
             _log.LogDebug($"REST request to get Melhor Apartamento : {request}");

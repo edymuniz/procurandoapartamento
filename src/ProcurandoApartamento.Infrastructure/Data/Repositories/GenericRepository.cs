@@ -37,6 +37,8 @@ namespace ProcurandoApartamento.Infrastructure.Data.Repositories
             return entity;
         }
 
+        internal virtual IQueryable<TEntity> Obter() { return _dbSet; }
+
         public virtual TEntity Update(TEntity entity)
         {
             _dbSet.Update(entity);
